@@ -35,7 +35,9 @@ public class Player {
 
     public void tick(){
         moveCounter++;
-        if(moveCounter>=5) {
+        
+        //VVV SPEED CHANGE OVER HERE VVV
+        if(moveCounter>=2) {
             checkCollisionAndMove();
             moveCounter=0;
         }
