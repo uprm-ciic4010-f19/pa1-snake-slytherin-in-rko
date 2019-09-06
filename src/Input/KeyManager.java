@@ -17,7 +17,7 @@ public class KeyManager implements KeyListener {
 
 	public KeyManager(){
 
-		keys = new boolean[256];
+		keys = new boolean[1000];
 		justPressed = new boolean[keys.length];
 		cantPress = new boolean[keys.length];
 
@@ -45,7 +45,7 @@ public class KeyManager implements KeyListener {
 		pbutt = keys[KeyEvent.VK_ESCAPE];
 		
 		minusSpeed = keys[KeyEvent.VK_MINUS];
-		//plusSpeed = keys[KeyEvent.VK_PLUS];
+		plusSpeed = keys[KeyEvent.VK_EQUALS];
 		addTail = keys[KeyEvent.VK_N];
 
 	}
