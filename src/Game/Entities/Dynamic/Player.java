@@ -21,6 +21,7 @@ public class Player {
 	public int moveCounter;
 	public int speedSet;
 	public Boolean speedDecider;
+	public Boolean pause;
 
 	public String direction;//is your first name one?
 
@@ -77,6 +78,10 @@ public class Player {
 		}if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
 			speedDecider= false;
 			speedChanger();
+		}
+		//This if statement pauses the game
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
+			pause = false;
 		}
 
 	}
