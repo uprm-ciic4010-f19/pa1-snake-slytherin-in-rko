@@ -25,6 +25,8 @@ public class Player {
 	public Boolean speedDecider;
 	public Boolean pause;
 
+	public double score;
+
 	public String direction;//is your first name one?
 
 	public Player(Handler handler){
@@ -36,7 +38,7 @@ public class Player {
 		justAte = false;
 		lenght= 1;
 		speedSet = 5;
-
+		score = 0;
 	}
 
 	public void tick(){
@@ -74,10 +76,12 @@ public class Player {
 		}
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)){
 			addTail();
-		}if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
+		}
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
 			speedDecider = true;
 			speedChanger();
-		}if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
+		}
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
 			speedDecider= false;
 			speedChanger();
 		}
@@ -85,13 +89,12 @@ public class Player {
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
 			State.setState(handler.getGame().pauseState);
 		}
-
 	}
 	public void speedChanger() {
 		if(speedDecider) {
-			 speedSet--;
+			speedSet--;
 		}else {
-			 speedSet++;
+			speedSet++;
 		}if(speedSet < 0) {
 			speedSet = 0;
 		}
@@ -160,7 +163,9 @@ public class Player {
 
 			}
 		}
-
+		//This piece here implements the SCORE.
+		g.drawString("SCORE", 10, 20);		
+		g.drawString(Double.toString(score), 55, 20);
 
 	}
 	public void addTail(){
@@ -271,6 +276,7 @@ public class Player {
 	}
 
 	public void Eat(){
+		score += Math.sqrt(2*score+1);
 		lenght++;
 		Tail tail= null;
 		handler.getWorld().appleLocation[xCoord][yCoord]=false;
@@ -389,7 +395,7 @@ public class Player {
 		}
 	}
 
-	public boolean isJustAte() {
+	public boolean isJustAte() { 
 		return justAte;
 	}
 

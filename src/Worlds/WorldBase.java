@@ -47,18 +47,19 @@ public abstract class WorldBase {
 	}
 	public void tick(){
 
-
-
 	}
 
 	public void render(Graphics g){
+		
+		
+		
+		
 
 		for (int i = 0; i <= 800; i = i + GridPixelsize) {
 
 			g.setColor(new Color(255,255,255,0));
 			g.drawLine(0, i, handler.getWidth() , i);
 			g.drawLine(i,0,i,handler.getHeight());
-
 		}
 	}
 }
