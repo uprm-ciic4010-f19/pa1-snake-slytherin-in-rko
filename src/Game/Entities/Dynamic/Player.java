@@ -106,28 +106,28 @@ public class Player {
 		switch (direction){
 		case "Left":
 			if(xCoord==0){
-				kill();
+				handler.getWorld().playerLocation[xCoord=handler.getWorld().GridWidthHeightPixelCount-1][yCoord]=true;
 			}else{
 				xCoord--;
 			}
 			break;
 		case "Right":
 			if(xCoord==handler.getWorld().GridWidthHeightPixelCount-1){
-				kill();
+				handler.getWorld().playerLocation[xCoord=0][yCoord]=true;
 			}else{
 				xCoord++;
 			}
 			break;
 		case "Up":
 			if(yCoord==0){
-				kill();
+				handler.getWorld().playerLocation[xCoord][yCoord=handler.getWorld().GridWidthHeightPixelCount-1]=true;
 			}else{
 				yCoord--;
 			}
 			break;
 		case "Down":
 			if(yCoord==handler.getWorld().GridWidthHeightPixelCount-1){
-				kill();
+				handler.getWorld().playerLocation[xCoord][yCoord=0]=true;
 			}else{
 				yCoord++;
 			}
@@ -274,8 +274,6 @@ public class Player {
 		}
 		handler.getWorld().body.addLast(tail);
 		handler.getWorld().playerLocation[tail.x][tail.y] = true;
-		
-		
 
 	}
 
