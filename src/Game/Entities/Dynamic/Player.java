@@ -169,7 +169,7 @@ public class Player {
 
 	}
 	public void addTail(){
-		score += Math.sqrt(2*score+1);
+		//score += Math.sqrt(2*score+1);
 		lenght++;
 		Tail tail= null;
 		
@@ -273,13 +273,15 @@ public class Player {
 			break;
 		}
 		handler.getWorld().body.addLast(tail);
-		handler.getWorld().playerLocation[tail.x][tail.y] = true;
+		handler.getWorld().playerLocation[tail.x][tail.y] = false;
 
 	}
 
 	public void Eat(){
 		handler.getWorld().appleLocation[xCoord][yCoord]=false;
 		handler.getWorld().appleOnBoard=false;
+		score += Math.sqrt(2*score+1);
+		score = Math.round(score);
 		addTail();
 		
 	}
