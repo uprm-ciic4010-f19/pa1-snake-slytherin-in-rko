@@ -22,6 +22,7 @@ public class Player {
 
 	public int moveCounter;
 	public int speedSet;
+	public Boolean speedEater;
 	public Boolean speedDecider;
 	public Boolean pause;
 
@@ -39,6 +40,7 @@ public class Player {
 		lenght= 1;
 		speedSet = 5;
 		score = 0;
+		speedEater = false;
 	}
 
 	public void tick(){
@@ -79,23 +81,26 @@ public class Player {
 		}
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
 			speedDecider = true;
-			speedChanger();
+			speedChangerBug();
 		}
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {
 			speedDecider= false;
-			speedChanger();
+			speedChangerBug();
 		}
 		//This if statement pauses the game
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
 			State.setState(handler.getGame().pauseState);
 		}
 	}
-	public void speedChanger() {
+	public void speedChangerBug() {
+
 		if(speedDecider) {
 			speedSet--;
 		}else {
 			speedSet++;
-		}if(speedSet < 0) {
+		}
+
+		if(speedSet < 0) {
 			speedSet = 0;
 		}
 	}
@@ -172,7 +177,7 @@ public class Player {
 		//score += Math.sqrt(2*score+1);
 		lenght++;
 		Tail tail= null;
-		
+
 		switch (direction){
 		case "Left":
 			if( handler.getWorld().body.isEmpty()){
@@ -274,7 +279,7 @@ public class Player {
 		}
 		handler.getWorld().body.addLast(tail);
 		handler.getWorld().playerLocation[tail.x][tail.y] = false;
-
+		
 	}
 
 	public void Eat(){
@@ -282,8 +287,13 @@ public class Player {
 		handler.getWorld().appleOnBoard=false;
 		score += Math.sqrt(2*score+1);
 		score = Math.round(score);
+		if(speedSet<0) {
+			speedSet = 0;
+		}else {
+			speedSet -= 3;
+		}
 		addTail();
-		
+
 	}
 
 	public void kill(){
