@@ -91,6 +91,8 @@ public class Player {
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
 			State.setState(handler.getGame().pauseState);
 		}
+
+
 	}
 	public void speedChangerBug() {
 
@@ -139,7 +141,7 @@ public class Player {
 			break;
 		}
 		handler.getWorld().playerLocation[xCoord][yCoord]=true;
-
+		
 
 		if(handler.getWorld().appleLocation[xCoord][yCoord]){
 			Eat();
@@ -150,6 +152,7 @@ public class Player {
 			handler.getWorld().body.removeLast();
 			handler.getWorld().body.addFirst(new Tail(x, y,handler));
 		}
+
 
 	}
 
@@ -174,7 +177,6 @@ public class Player {
 
 	}
 	public void addTail(){
-		//score += Math.sqrt(2*score+1);
 		lenght++;
 		Tail tail= null;
 
@@ -279,7 +281,7 @@ public class Player {
 		}
 		handler.getWorld().body.addLast(tail);
 		handler.getWorld().playerLocation[tail.x][tail.y] = false;
-		
+
 	}
 
 	public void Eat(){
@@ -298,13 +300,8 @@ public class Player {
 
 	public void kill(){
 		lenght = 0;
-		for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
-			for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
-
-				handler.getWorld().playerLocation[i][j]=false;
-
-			}
-		}
+		State.setState(handler.getGame().gameOver);
+	
 	}
 
 	public boolean isJustAte() { 

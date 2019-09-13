@@ -11,7 +11,7 @@ import java.awt.event.KeyListener;
 public class KeyManager implements KeyListener {
 
 	private boolean[] keys,justPressed,cantPress;
-	public boolean up=false, down=false, left=false, right=false, minusSpeed=false, plusSpeed=false, addTail = false, pause = false;
+	public boolean up=false, down=false, left=false, right=false, minusSpeed=false, plusSpeed=false, addTail = false, pause = false, kill = false;
 	public boolean pbutt=false;
 
 
@@ -48,6 +48,7 @@ public class KeyManager implements KeyListener {
 		plusSpeed = keys[KeyEvent.VK_EQUALS];
 		addTail = keys[KeyEvent.VK_N];
 		pause = keys[KeyEvent.VK_ESCAPE];
+		kill = keys[KeyEvent.VK_K];
 
 	}
 
