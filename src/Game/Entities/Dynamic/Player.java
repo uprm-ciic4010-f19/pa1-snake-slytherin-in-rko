@@ -104,6 +104,7 @@ public class Player {
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
 			restart();
 		}
+		
 	}
 	private void restart() {
 		State.setState(handler.getGame().menuState);
@@ -336,7 +337,7 @@ public class Player {
 	}
 
 	public void scoreMod() {
-		scoreAuxiliar -= Math.round(Math.sqrt(2*score+1));
+		scoreAuxiliar = score -Math.round(Math.sqrt(2*score+1));
 		if(handler.getWorld().apple.isGood()) {
 			score += Math.round(Math.sqrt(2*score+1));
 		}else {
@@ -346,7 +347,7 @@ public class Player {
 
 
 			}else {
-				score -= Math.round(Math.sqrt(2*score+1));
+				score = score - Math.round(Math.sqrt(2*score+1));
 
 
 			}
