@@ -91,10 +91,10 @@ public class Player {
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
 			State.setState(handler.getGame().pauseState);
 		}
-		if(!handler.getWorld().body.isEmpty()) {
-			for(int i = 0; i < handler.getWorld().GridWidthHeightPixelCount -1; i++) {
-					if((handler.getWorld().body.get(i).x == xCoord) &&(handler.getWorld().body.get(i).y == yCoord))
-						kill();
+		//GAME OVER
+		for(int i = 0; i < handler.getWorld().body.size(); i++) {
+			if((handler.getWorld().player.xCoord == handler.getWorld().body.get(i).x) && (handler.getWorld().player.yCoord == handler.getWorld().body.get(i).y)) {
+					kill();
 			}
 		}
 
