@@ -101,7 +101,15 @@ public class Player {
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
 			State.setState(handler.getGame().pauseState);
 		}
+		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
+			restart();
+		}
 	}
+	private void restart() {
+		State.setState(handler.getGame().menuState);
+		
+	}
+
 	public void speedChangerBug() {
 
 		if(speedDecider) {
