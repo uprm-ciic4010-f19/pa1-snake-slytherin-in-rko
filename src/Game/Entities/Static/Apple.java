@@ -1,5 +1,6 @@
 package Game.Entities.Static;
 
+
 import Main.Handler;
 
 /**
@@ -7,16 +8,27 @@ import Main.Handler;
  */
 public class Apple {
 
-    private Handler handler;
+	private Handler handler;
+	
 
-    public int xCoord;
-    public int yCoord;
+	public int xCoord;
+	public int yCoord;
 
-    public Apple(Handler handler,int x, int y){
-        this.handler=handler;
-        this.xCoord=x;
-        this.yCoord=y;
-    }
+	public Apple(Handler handler,int x, int y){
+		this.handler=handler;
+		this.xCoord=x;
+		this.yCoord=y;
+		
+	}
+
+	public Boolean isGood() {
+		if(handler.getWorld().player.appleTimer > 200) {
+			
+			return false;
+		}else {
+			return true;
+		}
+	}
 
 
 }

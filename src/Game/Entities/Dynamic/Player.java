@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+import Game.Entities.Static.Apple;
 import Game.GameStates.State;
 
 /**
@@ -22,11 +23,14 @@ public class Player {
 
 	public int moveCounter;
 	public int speedSet;
+	public int appleTimer;
 	public Boolean speedEater;
 	public Boolean speedDecider;
 	public Boolean pause;
+	public Boolean addTailBugger;
 
 	public double score;
+	public double scoreAuxiliar;
 
 	public String direction;//is your first name one?
 
@@ -41,15 +45,21 @@ public class Player {
 		speedSet = 5;
 		score = 0;
 		speedEater = false;
+		appleTimer = 0;
+		scoreAuxiliar = 0;
+		addTailBugger = false;
 	}
 
 	public void tick(){
 		moveCounter++;
 
-		//VVV SPEED CHANGE OVER HERE VVV
 		if(moveCounter>=speedSet) {
 			checkCollisionAndMove();
 			moveCounter=0;
+			appleTimer++;
+		}
+		if(appleTimer > 200) {
+			handler.getWorld().apple.isGood();
 		}
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
 			if(direction == "Down") {
@@ -77,7 +87,8 @@ public class Player {
 			}
 		}
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)){
-			addTail();
+			addTailBugger = true;
+			tailMod();
 		}
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {
 			speedDecider = true;
@@ -87,7 +98,6 @@ public class Player {
 			speedDecider= false;
 			speedChangerBug();
 		}
-		//This if statement pauses the game
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) {
 			State.setState(handler.getGame().pauseState);
 		}
@@ -143,6 +153,7 @@ public class Player {
 
 		if(handler.getWorld().appleLocation[xCoord][yCoord]){
 			Eat();
+			scoreMod();
 		}
 
 		if(!handler.getWorld().body.isEmpty()) {
@@ -159,24 +170,41 @@ public class Player {
 			for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
 				g.setColor(Color.GREEN);
 
-				if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
+				if(playeLocation[i][j]){
 					g.fillRect((i*handler.getWorld().GridPixelsize),
 							(j*handler.getWorld().GridPixelsize),
 							handler.getWorld().GridPixelsize,
 							handler.getWorld().GridPixelsize);
 				}
 
+				if(handler.getWorld().appleLocation[i][j]) {
+					g.setColor(new Color(247,23,23));
+					g.fillRect((i*handler.getWorld().GridPixelsize),
+							(j*handler.getWorld().GridPixelsize),
+							handler.getWorld().GridPixelsize,
+							handler.getWorld().GridPixelsize);
+					if(!handler.getWorld().apple.isGood()) {
+						g.setColor(new Color(212,232,31));
+						g.fillRect((i*handler.getWorld().GridPixelsize),
+								(j*handler.getWorld().GridPixelsize),
+								handler.getWorld().GridPixelsize,
+								handler.getWorld().GridPixelsize);
+					}
+				}
+
 			}
 		}
+		g.setColor(Color.BLACK);
 		//This piece here implements the SCORE.
-		g.drawString("SCORE", 10, 20);		
-		g.drawString(Double.toString(score), 55, 20);
+		g.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		g.drawString("SCORE:", 10, 20);		
+		g.drawString(Double.toString(score), 85, 20);
 
 	}
-	public void addTail(){
-		//score += Math.sqrt(2*score+1);
-		lenght++;
+	public void tailMod(){
+
 		Tail tail= null;
+
 
 		switch (direction){
 		case "Left":
@@ -277,22 +305,55 @@ public class Player {
 			}
 			break;
 		}
-		handler.getWorld().body.addLast(tail);
-		handler.getWorld().playerLocation[tail.x][tail.y] = false;
-		
+		if(handler.getWorld().apple.isGood() || addTailBugger) {
+			addTailBugger = false;
+			lenght++;
+			handler.getWorld().body.addLast(tail);
+			handler.getWorld().playerLocation[tail.x][tail.y] = false;
+		}else if (lenght > 1){
+			lenght --;
+
+			handler.getWorld().body.removeLast();
+
+			for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
+				for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
+
+					handler.getWorld().playerLocation[i][j]=false;
+
+				}
+			}
+			//handler.getWorld().playerLocation[tail.x][tail.y] = true;
+		}
+
 	}
 
+	public void scoreMod() {
+		scoreAuxiliar -= Math.round(Math.sqrt(2*score+1));
+		if(handler.getWorld().apple.isGood()) {
+			score += Math.round(Math.sqrt(2*score+1));
+		}else {
+			if(scoreAuxiliar <=0) {
+				score = 0;
+				scoreAuxiliar = 0;
+
+
+			}else {
+				score -= Math.round(Math.sqrt(2*score+1));
+
+
+			}
+		}
+		appleTimer = 0;
+	}
 	public void Eat(){
 		handler.getWorld().appleLocation[xCoord][yCoord]=false;
 		handler.getWorld().appleOnBoard=false;
-		score += Math.sqrt(2*score+1);
-		score = Math.round(score);
 		if(speedSet<0) {
 			speedSet = 0;
 		}else {
 			speedSet -= 3;
 		}
-		addTail();
+		tailMod();
 
 	}
 
