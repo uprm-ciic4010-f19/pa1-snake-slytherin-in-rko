@@ -368,13 +368,8 @@ public class Player {
 
 	public void kill(){
 		lenght = 0;
-		for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
-			for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
+		State.setState(handler.getGame().gameOver);
 
-				handler.getWorld().playerLocation[i][j]=false;
-
-			}
-		}
 	}
 
 	public boolean isJustAte() { 
