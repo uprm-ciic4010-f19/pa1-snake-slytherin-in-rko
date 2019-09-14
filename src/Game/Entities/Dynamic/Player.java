@@ -104,6 +104,12 @@ public class Player {
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
 			restart();
 		}
+		//GAME OVER
+		for(int i = 0; i < handler.getWorld().body.size(); i++) {
+			if((handler.getWorld().player.xCoord == handler.getWorld().body.get(i).x) && (handler.getWorld().player.yCoord == handler.getWorld().body.get(i).y)) {
+					kill();
+			}
+		}
 		
 	}
 	private void restart() {
